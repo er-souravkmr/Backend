@@ -3,6 +3,8 @@ import AggregatePaginate from "mongoose-aggregate-paginate-v2";
 import  jwt  from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
+
+//Schema off the User Model
 const userSchema = new Schema(
     {
         username : {
@@ -52,6 +54,7 @@ const userSchema = new Schema(
 
 userSchema.plugin(AggregatePaginate)
 
+// Making Has of password using bcrypt before saving it to db 
 userSchema.pre("save" , async function(next){
     if(!this.isModified("password")) return next();
 
@@ -59,6 +62,7 @@ userSchema.pre("save" , async function(next){
     next()
 })
 
+//Used to compare passed password with the password saved in db using bcrypt
 userSchema.methods.isPasswordCorrect =  async function(password){
     return await bcrypt.compare(password,this.password)
 }
