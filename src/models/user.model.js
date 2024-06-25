@@ -1,7 +1,7 @@
 import mongoose, {Schema, SchemaType } from "mongoose";
 import AggregatePaginate from "mongoose-aggregate-paginate-v2";
 import  jwt  from "jsonwebtoken";
-import bcrypt from bcrypt;
+import bcrypt from "bcrypt";
 
 const userSchema = new Schema(
     {
