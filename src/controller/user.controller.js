@@ -341,6 +341,68 @@ const updateCover = asyncHandler(async(req,res)=>{
         )
     )
 })
+
+const getUserChannelProfile = asyncHandler(async(req,res)=>{
+    const{username} = req.params;
+    if(!username?.trim()){
+        throw new ApiError(401,"username is missing")
+    }
+
+    await User.aggregate([
+        {
+            $match:{
+                username: username?.toLowerCase()
+            }
+        },
+        {
+            $lookup:{
+                from: "subscriptions",
+                localField: "_id",
+                foreignField: "channel",
+                as: "subscribers"
+            }
+        },
+        {
+            $lookup:{
+                from: "subscriptions",
+                localField: "_id",
+                foreignField: "subscribers",
+                as: "subscribedTo"
+            }
+        },
+        {
+            $addFields: {
+                subscribersCount: {
+                    $size: "$subscribers"
+                },
+                channelsSubscribedToCount: {
+                    $size: "$subscribedTo"
+                },
+                isSubscribed: {
+                    $cond: {
+                        if: {$in: [req.user?._id, "$subscribers.subscriber"]},
+                        then: true,
+                        else: false
+                    }
+                }
+            }
+        },
+        {
+            $project: {
+                fullName: 1,
+                username: 1,
+                subscribersCount: 1,
+                channelsSubscribedToCount: 1,
+                isSubscribed: 1,
+                avatar: 1,
+                coverImage: 1,
+                email: 1
+
+            }
+        }
+
+    ])
+})
  
   
 export {
@@ -352,5 +414,6 @@ export {
     getCurrentuser,
     updateAccountDetails,
     updateCover,
-    updateAvatar
+    updateAvatar,
+    getUserChannelProfile
 }
