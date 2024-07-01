@@ -1,6 +1,7 @@
 import {asyncHandler} from "../utils/asyncHandler.js";
 import {ApiError} from "../utils/apiError.js"
 import {User} from "../models/user.model.js"
+import mongoose from "mongoose";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { deleteImage, uploadOnCloudinary } from "../utils/cloudinary.js";
 import jwt from "jsonwebtoken";
@@ -58,7 +59,7 @@ const registerUser = asyncHandler( async (req ,res)=>{
     const avatar = await uploadOnCloudinary(avatarLocalPath)
     const coverImage = await uploadOnCloudinary(coverImageLocalPath)
 
-    console.log(avatar.public_id);
+    // console.log(avatar.public_id);
    
 
     if (!avatar) {
@@ -267,7 +268,7 @@ const updateAccountDetails = asyncHandler(async (req,res)=>{
 })
 
 const updateAvatar = asyncHandler(async(req,res)=>{
-    const avatarLocalPath = req.files?.path
+    const avatarLocalPath = req.file?.path
     if(!avatarLocalPath){
         throw new ApiError(401,"File is missing")
     }
@@ -276,6 +277,8 @@ const updateAvatar = asyncHandler(async(req,res)=>{
     if(!avatarImage.url){
         throw new ApiError(501,"Error while uploading on avatar")
     }
+
+
 
     const user = await User.findByIdAndUpdate(
         req.user?._id,
@@ -304,7 +307,7 @@ const updateAvatar = asyncHandler(async(req,res)=>{
     )
 })
 const updateCover = asyncHandler(async(req,res)=>{
-    const coverLocalPath = req.files?.path
+    const coverLocalPath = req.file?.path
     if(!coverLocalPath){
         throw new ApiError(401,"File is missing")
     }
@@ -348,7 +351,7 @@ const getUserChannelProfile = asyncHandler(async(req,res)=>{
         throw new ApiError(401,"username is missing")
     }
 
-    await User.aggregate([
+    const user = await User.aggregate([
         {
             $match:{
                 username: username?.toLowerCase()
@@ -402,6 +405,71 @@ const getUserChannelProfile = asyncHandler(async(req,res)=>{
         }
 
     ])
+
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(
+            200,
+            user,
+            "Channel Fetched Sucessfully"
+        )
+    )
+})
+
+const getWatchHistory = asyncHandler(async (req,res)=>{
+    const user = await User.aggregate([
+        {
+           $match :{
+               _id: new mongoose.Types.ObjectId(req.user._id)
+           }
+        },
+        {
+            $lookup:{
+                from : "videos",
+                localField: "watchHistory",
+                foreignField: "_id",
+                as: "watchHistory",
+                pipeline:[
+                    {
+                        $lookup:{
+                            from : "users",
+                            localField:"owner",
+                            foreignField:"_id",
+                            as:"owner",
+                            pipeline : [
+                                {
+                                    $project:{
+                                        fullName:1,
+                                        username:1,
+                                        avatar:1
+                                    }
+                                }
+                            ]   
+                        }
+                    },
+                    {
+                        $addFields:{
+                            owner:{
+                                $first: "$owner"
+                            }
+                        }
+                    }
+                ]
+            }
+
+        }
+    ])
+
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(
+            200,
+            user[0].watchHistory,
+            "watched History Fetched Succesfully"
+        )
+    )
 })
  
   
@@ -415,5 +483,6 @@ export {
     updateAccountDetails,
     updateCover,
     updateAvatar,
-    getUserChannelProfile
+    getUserChannelProfile,
+    getWatchHistory
 }
