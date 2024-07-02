@@ -1,0 +1,36 @@
+Backend
+
+-setup public and src directory
+-src has controller,middleware,models,db,utils,routes folders and index & app.js file
+-Public has temp folder where image will be stored 
+
+-db has js file which will connect app to database.
+-model has js files which has whole schema of data being saved like User and Video.
+-util folder have some utilities like of cloudinary.
+
+-create controller and roter file
+- in controller create register file
+
+#Logic of Register User :
+
+--get user details from frontend/Postman
+--validation
+--check if user already exist : username , email
+--check for image , check for avatar
+--upload them to Cloudinary ,avatar
+--craete user object and create entry in db 
+--check for user craetion 
+--send response
+
+
+upload.fields([
+        {
+            name:avatar,
+            maxCount:1
+        },
+        {
+            name:coverImage,
+            maxCount:1
+        }
+    ]) 
+    ,

@@ -3,7 +3,7 @@ import {ApiError} from "../utils/apiError.js"
 import {User} from "../models/user.model.js"
 import mongoose from "mongoose";
 import { ApiResponse } from "../utils/apiResponse.js";
-import { deleteImage, uploadOnCloudinary } from "../utils/cloudinary.js";
+import { deleteFile, uploadOnCloudinary } from "../utils/cloudinary.js";
 import jwt from "jsonwebtoken";
 
 const generateAccessAndRefreshToken = async (userId)=>{
@@ -142,8 +142,8 @@ const logoutUser = asyncHandler(async (req,res)=>{
     await User.findByIdAndUpdate(
         req.user._id,
         {
-            $set:{
-                refreshToken:undefined
+            $unset:{
+                refreshToken:1
             }
         },
         {
@@ -290,7 +290,7 @@ const updateAvatar = asyncHandler(async(req,res)=>{
         {new:true}
     ).select("-password")
 
-    const deletedRef = await deleteImage(avatarImage.public_id)
+    const deletedRef = await deleteFile(avatarImage.public_id)
     
     if(!deletedRef){
         throw new ApiError(500,"Avatar Not Deleted")
@@ -327,7 +327,7 @@ const updateCover = asyncHandler(async(req,res)=>{
         {new:true}
     ).select("-password")
 
-    const deletedRef = await deleteImage(coverImage.public_id)
+    const deletedRef = await deleteFile(coverImage.public_id)
     
     if(!deletedRef){
         throw new ApiError(500,"Cover Not Deleted")
@@ -358,7 +358,7 @@ const getUserChannelProfile = asyncHandler(async(req,res)=>{
             }
         },
         {
-            $lookup:{
+            $lookup:{   //$lookup is an aggregation pipeline stage that allows you to perform LEFT OUTER JOIN between two collection.
                 from: "subscriptions",
                 localField: "_id",
                 foreignField: "channel",

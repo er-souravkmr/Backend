@@ -1,4 +1,5 @@
 import mongoose , {Schema} from "mongoose";
+import AggregatePaginate from "mongoose-aggregate-paginate-v2";
 
 const subsSchema = new Schema(
     {
