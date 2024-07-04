@@ -1,13 +1,20 @@
 import mongoose, { Schema, SchemaType } from "mongoose";
+import AggregatePaginate from "mongoose-aggregate-paginate-v2"
 
 const videoSchema = new mongoose.Schema(
     {
         videoFile:{
-            type : String, //url
+            type: {
+                url: String,
+                public_id: String,
+            },
             required : true
         },
         thumbnail : {
-            type : String, //url
+            type: {
+                url: String,
+                public_id: String,
+            },
             required : true
         },
         title : {
@@ -30,7 +37,7 @@ const videoSchema = new mongoose.Schema(
             type : Boolean, 
             default : true
         },
-        Owner : {
+        owner : {
             type : Schema.Types.ObjectId, 
             ref : "User"
         },
