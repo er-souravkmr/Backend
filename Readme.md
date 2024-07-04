@@ -1,4 +1,4 @@
-# Backend Project ✅
+# Backend Project ✅[Youtube Clone With Community Post(Tweet)]
 
 ### Summary of this project
 
@@ -9,5 +9,26 @@ Project uses all standard practices like JWT, bcrypt, access tokens, refresh Tok
 
 ---
 
+## Technologies Used
+- Node.js
+- Express.js
+- MongoDB
+- Cloudinary
+
+---
+
+## Features
+
+### User Management
+- Registration, login, logout, password reset
+- Profile management (avatar, cover image, details)
+
+### Video Management
+- Video upload and publishing
+- Video search, sorting, and pagination
+- Video editing and deletion
+- Visibility control (publish/unpublish)
+
+---
 
 
