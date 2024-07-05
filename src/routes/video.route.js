@@ -1,7 +1,13 @@
 import { Router } from "express";
 import { upload } from "../middleware/multer.middleware.js";
 import { verifyJwt } from "../middleware/auth.middleware.js";
-import { deleteVideo, getAllVideos, getVideoById, publishAVideo, togglePublishStatus, updateVideo } from "../controller/video.controller.js";
+import { deleteVideo, 
+         getAllVideos, 
+         getVideoById, 
+         publishAVideo, 
+         togglePublishStatus, 
+         updateVideo 
+       } from "../controller/video.controller.js";
 
 const router = Router();
 router.use(verifyJwt) //Aplly VerifyJwt to all routes in  this file

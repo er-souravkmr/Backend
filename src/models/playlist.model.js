@@ -28,6 +28,7 @@ const playlistSchema = new Schema(
 
 
 
+playlistSchema.plugin(AggregatePaginate)
 
 
 

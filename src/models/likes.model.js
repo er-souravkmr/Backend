@@ -1,4 +1,5 @@
 import mongoose,{Schema} from "mongoose";
+import AggregatePaginate from "mongoose-aggregate-paginate-v2";
 
 const likeSchema = new Schema(
     {
@@ -14,11 +15,13 @@ const likeSchema = new Schema(
             type:Schema.Types.ObjectId,
             ref:"User"
         },
-        tweets:{
+        tweet:{
             type:Schema.Types.ObjectId,
             ref:"Twitter"
         },
     },{timestamps:true}
 )
+
+likeSchema.plugin(AggregatePaginate)
 
 export const Like = mongoose.model('Like',likeSchema)
