@@ -23,7 +23,9 @@ const getVideoComments = asyncHandler(async (req, res) => {
         throw new ApiError(400,"Video Not Found")
     }   
 
-    const comments =  Comment.aggregate([
+    console.log(videoId)
+
+    const comments = await Comment.aggregate([
         {
             $match:{
                 video: new mongoose.Types.ObjectId(videoId)
@@ -91,22 +93,24 @@ const getVideoComments = asyncHandler(async (req, res) => {
         )
     }
 
-    const options = {
-        page: parseInt(page, 10),
-        limit: parseInt(limit, 10)
-    } 
-    console.log(comments)
+    // const options = {
+    //     page: parseInt(page, 10),
+    //     limit: parseInt(limit, 10)
+    // } 
+    // console.log(comments)
 
-    const commentPaginate = await Comment.aggregatePaginate(comments,options);
+    // const commentPaginate = await Comment.aggregatePaginate(comments,options);
 
-    if(!commentPaginate){
-        throw new ApiError(
-            402,
-            "Failed to Paginate"
-        )
-    }
+    // if(!commentPaginate){
+    //     throw new ApiError(
+    //         402,
+    //         "Failed to Paginate"
+    //     )
+    // }
 
-    return res.status(200).json(new ApiResponse(200, commentPaginate , "Comment Fetched"))
+    //paginate plugin  has bug
+
+    return res.status(200).json(new ApiResponse(200, comments , "Comment Fetched"))
 
 })
 
