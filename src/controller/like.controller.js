@@ -44,7 +44,7 @@ const toggleCommentLike = asyncHandler(async (req,res)=>{
     const alreadyLiked = await Like.findOne(
         {
             comment : commentId,
-            likedBy : req.user?._id 
+            likedBy : req?.user?._id 
         }
     )
 
@@ -53,10 +53,10 @@ const toggleCommentLike = asyncHandler(async (req,res)=>{
         return res.status(200).json(new ApiResponse(200 , {isLiked:false}))
     }
 
-    await Like.findByIdAndUpdate(
+    await Like.create(
         {
             comment : commentId,
-            likedBy : req.user?._id 
+            likedBy : req?.user?._id 
         }
     )
 
@@ -73,7 +73,7 @@ const toggleTweetLike = asyncHandler(async (req,res)=>{
     const alreadyLiked = await Like.findOne(
         {
             tweet : tweetId,
-            likedBy : req.user?._id 
+            likedBy : req?.user?._id 
         }
     )
 
@@ -82,7 +82,7 @@ const toggleTweetLike = asyncHandler(async (req,res)=>{
         return res.status(200).json(new ApiResponse(200 , {isLiked:false}))
     }
 
-    await Like.findByIdAndUpdate(
+    await Like.create(
         {
             tweet : tweetId,
             likedBy : req.user?._id 

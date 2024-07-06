@@ -44,7 +44,7 @@ const updateTweet = asyncHandler(async (req,res)=>{
         throw new ApiError(401,"Unauthorized Request to update Tweet")
     }
 
-    const newTweet = await Tweet.findByIdAndUpdate(
+    const newTweet = await Tweet.findByIdAndUpdate( tweetId,
         {
             $set:{
               content : content
@@ -101,7 +101,7 @@ const getUserTweet = asyncHandler(async (req,res)=>{
     const tweets = await Tweet.aggregate([
         {
             $match:{
-                owner : userId
+                owner : new mongoose.Types.ObjectId(userId) 
             }
         },
         {
@@ -169,8 +169,8 @@ const getUserTweet = asyncHandler(async (req,res)=>{
         }
 
     ])
-
-    if(!tweets){
+    
+    if(tweets.length < 1){
         throw new ApiError(500 ,"No Tweets Found")
     }
 

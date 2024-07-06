@@ -23,7 +23,7 @@ const getVideoComments = asyncHandler(async (req, res) => {
         throw new ApiError(400,"Video Not Found")
     }   
 
-    const comments =  await Comment.aggregate([
+    const comments =  Comment.aggregate([
         {
             $match:{
                 video: new mongoose.Types.ObjectId(videoId)
@@ -71,7 +71,7 @@ const getVideoComments = asyncHandler(async (req, res) => {
             $project:{
                 content:1,
                 createdAt:1,
-                likesCount:1,
+                likeCount:1,
                 owner:{
                     username: 1,
                     fullName: 1,
@@ -81,6 +81,8 @@ const getVideoComments = asyncHandler(async (req, res) => {
             }
         }
     ])
+
+  
 
     if(!comments){
         throw new ApiError(
@@ -93,6 +95,7 @@ const getVideoComments = asyncHandler(async (req, res) => {
         page: parseInt(page, 10),
         limit: parseInt(limit, 10)
     } 
+    console.log(comments)
 
     const commentPaginate = await Comment.aggregatePaginate(comments,options);
 
@@ -196,7 +199,7 @@ const deleteComment = asyncHandler(async (req, res) => {
         throw new ApiError(401,"Comments Not Found")
     }
 
-    if(comment?.owner.toString() !== req.user?._id.tostring()){
+    if(comment?.owner.toString() !== req.user?._id.toString()){
         throw new ApiError(401,"You are not Owner")
     }
 
