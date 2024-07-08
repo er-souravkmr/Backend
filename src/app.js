@@ -11,8 +11,8 @@ app.use(cors({
 
 //inbuilt body parser
 app.use(express.json({limit:"16kb"}));
-
 app.use(express.urlencoded({extended:true,limit : "16kb"}))
+
 app.use(express.static("public"));
 app.use(cookieParser());
 
@@ -22,6 +22,7 @@ app.use(cookieParser());
  import likeRouter from "./routes/like.route.js"
  import commentRouter from "./routes/comment.route.js"
  import tweetRouter from "./routes/tweet.route.js"
+ import playlistRouter from "./routes/playlist.route.js"
 
  //Router declartion
  app.use("/api/v1/users",userRouter)
@@ -29,6 +30,7 @@ app.use(cookieParser());
  app.use("/api/v1/likes",likeRouter)
  app.use("/api/v1/comments",commentRouter)
  app.use("/api/v1/tweets",tweetRouter)
+ app.use("/api/v1/playlist",playlistRouter)
 
 
 export  {app};
