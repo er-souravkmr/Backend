@@ -23,6 +23,7 @@ app.use(cookieParser());
  import commentRouter from "./routes/comment.route.js"
  import tweetRouter from "./routes/tweet.route.js"
  import playlistRouter from "./routes/playlist.route.js"
+ import subsRouter from "./routes/subscription.route.js"
 
  //Router declartion
  app.use("/api/v1/users",userRouter)
@@ -31,6 +32,7 @@ app.use(cookieParser());
  app.use("/api/v1/comments",commentRouter)
  app.use("/api/v1/tweets",tweetRouter)
  app.use("/api/v1/playlist",playlistRouter)
+ app.use("/api/v1/subscription",subsRouter)
 
 
 export  {app};

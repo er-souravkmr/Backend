@@ -4,11 +4,11 @@ import AggregatePaginate from "mongoose-aggregate-paginate-v2";
 const subsSchema = new Schema(
     {
         subscribers:{
-            types: Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref:"User"
         },
         channel:{
-            types: Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref:"User"
         }
     },
