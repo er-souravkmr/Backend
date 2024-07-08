@@ -30,8 +30,62 @@ Project uses all standard practices like JWT, bcrypt, access tokens, refresh Tok
 - Video editing and deletion
 - Visibility control (publish/unpublish)
 
+### Tweet Management:
+
+- Tweet creation and publishing
+- Viewing user tweets
+- Updating and deleting tweets
+
+### Subscription Management:
+
+- Subscribing to channels
+- Viewing subscriber and subscribed channel lists
+
+### Playlist Management:
+
+- Creating, updating, and deleting playlists
+- Adding and removing videos from playlists
+- Viewing user playlists
+
+### Like Management:
+
+- Liking and unliking videos, comments, and tweets
+- Viewing liked videos
+
+### Comment Management:
+
+- Adding, updating, and deleting comments on videos
+
+
 ---
 
-### In Progress
+## Installation and Setup
+
+1. **Clone the repository:**
+
+    ```bash
+    git clone https://github.com/er-souravkmr/Backend.git
+    ```
+
+2. **Install dependencies:**
+
+    ```bash
+    cd Backend
+    npm install
+    ```
+
+3. **Set up environment variables:**
+    Create a .env in root of project and fill in the required values in the .env file using .env.sample file
+
+4. **Start the server:**
+
+    ```bash
+    npm run dev
+    ```
+
+## Contributing
+
+If you wish to contribute to this project, please feel free to contribute.
+
 
 
