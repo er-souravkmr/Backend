@@ -10,6 +10,15 @@ Project uses all standard practices like JWT, bcrypt, access tokens, refresh Tok
 
 ---
 
+## Important links
+
+| Content            | Link                                                                        |
+| -------------------| ----------------------------------------------------------------------------|
+| API Documentation  | [click here](https://documenter.getpostman.com/view/36542781/2sA3e2fUZ6)    |
+| Model              | [click here ](https://app.eraser.io/workspace/YtPqZ1VogxGy1jzIDkzj)         |
+
+---
+
 ## Technologies Used
 - Node.js
 - Express.js
@@ -56,6 +65,14 @@ Project uses all standard practices like JWT, bcrypt, access tokens, refresh Tok
 
 - Adding, updating, and deleting comments on videos
 
+### Dashboard:
+
+- Viewing channel statistics (views, subscribers, videos, likes)
+- Accessing uploaded videos
+
+### Health Check:
+
+- Endpoint to verify the backend's health
 
 ---
 
@@ -87,5 +104,7 @@ Project uses all standard practices like JWT, bcrypt, access tokens, refresh Tok
 
 If you wish to contribute to this project, please feel free to contribute.
 
+## Thanks to 
 
+Yotube, Google, ChatGPT
 
