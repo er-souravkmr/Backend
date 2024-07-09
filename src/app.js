@@ -25,6 +25,7 @@ app.use(cookieParser());
  import playlistRouter from "./routes/playlist.route.js"
  import subsRouter from "./routes/subscription.route.js"
  import health from "./routes/healthcheck.route.js"
+ import dashboard from "./routes/dashboard.route.js"
 
  //Router declartion
  app.use("/api/v1/users",userRouter)
@@ -35,6 +36,7 @@ app.use(cookieParser());
  app.use("/api/v1/playlist",playlistRouter)
  app.use("/api/v1/subscription",subsRouter)
  app.use("/api/v1/health",health)
+ app.use("/api/v1/dashboard",dashboard)
 
 
 export  {app};
