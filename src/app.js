@@ -24,6 +24,7 @@ app.use(cookieParser());
  import tweetRouter from "./routes/tweet.route.js"
  import playlistRouter from "./routes/playlist.route.js"
  import subsRouter from "./routes/subscription.route.js"
+ import health from "./routes/healthcheck.route.js"
 
  //Router declartion
  app.use("/api/v1/users",userRouter)
@@ -33,6 +34,7 @@ app.use(cookieParser());
  app.use("/api/v1/tweets",tweetRouter)
  app.use("/api/v1/playlist",playlistRouter)
  app.use("/api/v1/subscription",subsRouter)
+ app.use("/api/v1/health",health)
 
 
 export  {app};
